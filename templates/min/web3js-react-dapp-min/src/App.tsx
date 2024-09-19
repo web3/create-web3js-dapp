@@ -126,6 +126,7 @@ function App() {
   }
   return (
     <div className="flex flex-col gap-5 items-center justify-center w-full h-screen">
+      <p className="text-xl font-bold">web3js React Minimal Template</p>
       <div id="warn" style={{ color: "red" }}>
         {warning}
       </div>
