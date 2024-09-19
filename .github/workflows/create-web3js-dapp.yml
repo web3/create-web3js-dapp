@@ -1,0 +1,19 @@
+name: create-web3js-dapp Test & Build
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+        types: [ opened, reopened, synchronize ]
+jobs:
+    build:
+        name: Test & Build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                node-version: 20
+            - run: npm i
+            - run: npm test
+            - run: npm run build
