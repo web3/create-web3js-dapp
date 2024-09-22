@@ -29,3 +29,28 @@ test("getSelectedOption(angular, minimal)", () => {
     "unexpected project location",
   );
 });
+
+test("getSelectedOption(react, minimal)", () => {
+  const opts: Options = { framework: "react", template: "minimal" };
+  const result: SelectedOption = getSelectedOption(opts);
+
+  const expectedName: string = "web3js-react-dapp-min";
+  assert.strictEqual(
+    result.projectName,
+    expectedName,
+    "unexpected project name",
+  );
+
+  const expectedLocation: string = join(
+    __dirname,
+    "..",
+    "templates",
+    "min",
+    expectedName,
+  );
+  assert.strictEqual(
+    result.projectLocation,
+    expectedLocation,
+    "unexpected project location",
+  );
+});
