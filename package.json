@@ -2,16 +2,33 @@
   "name": "create-web3js-dapp",
   "version": "0.1.0",
   "description": "Scaffolding utility to create front-end projects with Web3.js",
-  "main": "src/index.js",
-  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "start": "ts-node src/index.ts",
+    "test": "ts-node src/lib.spec.ts"
+  },
   "engines": {
     "node": ">=20"
   },
   "bin": {
-    "create-web3js-dapp": "src/index.js"
+    "create-web3js-dapp": "dist/index.js"
   },
+  "files": [
+    "dist/index.js",
+    "templates"
+  ],
   "contributors": [
     "ChainSafe <info@chainsafe.io>"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^6.0.1",
+    "commander": "^12.1.0"
+  }
 }
