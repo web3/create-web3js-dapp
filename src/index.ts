@@ -9,7 +9,7 @@ import { Option, type OptionValues, program } from "commander";
 import { select } from "@inquirer/prompts";
 
 import { getSelectedOption } from "./lib";
-import type { Options } from "./types";
+import { Framework, TemplateType, type Options } from "./types";
 
 program
   .addOption(
@@ -19,7 +19,10 @@ program
     ]),
   )
   .addOption(
-    new Option("-t, --template <type>", "template type").choices(["minimal"]),
+    new Option("-t, --template <type>", "template type").choices([
+      "demonstration",
+      "minimal",
+    ]),
   );
 
 program.parse();
@@ -62,26 +65,36 @@ async function inquire(cliOpts: OptionValues): Promise<Options> {
       choices: [
         {
           name: "Angular",
-          value: "angular",
+          value: Framework.Angular,
         },
         {
           name: "React",
-          value: "react",
+          value: Framework.React,
         },
       ],
     });
   }
 
   if (!options.template) {
+    const choices = [
+      {
+        name: "Minimal",
+        value: TemplateType.Minimal,
+        description: "Starter project with minimal boilerplate",
+      },
+    ];
+
+    if (options.framework === Framework.React) {
+      choices.unshift({
+        name: "Demonstration",
+        value: TemplateType.Demonstration,
+        description: "Demonstration dApp",
+      });
+    }
+
     options.template = await select({
       message: "Select a template type",
-      choices: [
-        {
-          name: "Minimal",
-          value: "minimal",
-          description: "Starter project with minimal boilerplate",
-        },
-      ],
+      choices,
     });
   }
 

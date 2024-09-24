@@ -3,10 +3,18 @@ import { test } from "node:test";
 import { join } from "path";
 
 import { getSelectedOption } from "./lib";
-import type { Options, SelectedOption } from "./types";
+import {
+  Framework,
+  TemplateType,
+  type Options,
+  type SelectedOption,
+} from "./types";
 
 test("getSelectedOption(angular, minimal)", () => {
-  const opts: Options = { framework: "angular", template: "minimal" };
+  const opts: Options = {
+    framework: Framework.Angular,
+    template: TemplateType.Minimal,
+  };
   const result: SelectedOption = getSelectedOption(opts);
 
   const expectedName: string = "web3js-angular-dapp-min";
@@ -30,8 +38,29 @@ test("getSelectedOption(angular, minimal)", () => {
   );
 });
 
+test("getSelectedOption(angular, demonstration)", () => {
+  const opts: Options = {
+    framework: Framework.Angular,
+    template: TemplateType.Demonstration,
+  };
+  try {
+    const result: SelectedOption = getSelectedOption(opts);
+  } catch (e) {
+    assert.strictEqual(
+      e.toString(),
+      "Error: Angular demonstration dApp has not yet been implemented.",
+    );
+    return;
+  }
+
+  assert.strictEqual(true, false);
+});
+
 test("getSelectedOption(react, minimal)", () => {
-  const opts: Options = { framework: "react", template: "minimal" };
+  const opts: Options = {
+    framework: Framework.React,
+    template: TemplateType.Minimal,
+  };
   const result: SelectedOption = getSelectedOption(opts);
 
   const expectedName: string = "web3js-react-dapp-min";
@@ -46,6 +75,34 @@ test("getSelectedOption(react, minimal)", () => {
     "..",
     "templates",
     "min",
+    expectedName,
+  );
+  assert.strictEqual(
+    result.projectLocation,
+    expectedLocation,
+    "unexpected project location",
+  );
+});
+
+test("getSelectedOption(react, demonstration)", () => {
+  const opts: Options = {
+    framework: Framework.React,
+    template: TemplateType.Demonstration,
+  };
+  const result: SelectedOption = getSelectedOption(opts);
+
+  const expectedName: string = "web3js-react-dapp-demo";
+  assert.strictEqual(
+    result.projectName,
+    expectedName,
+    "unexpected project name",
+  );
+
+  const expectedLocation: string = join(
+    __dirname,
+    "..",
+    "templates",
+    "demo",
     expectedName,
   );
   assert.strictEqual(
