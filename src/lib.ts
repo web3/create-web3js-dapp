@@ -8,26 +8,22 @@ import {
 } from "./types";
 
 export function getSelectedOption(opts: Options): SelectedOption {
+  const isDemo: boolean = opts.template === TemplateType.Demonstration;
   switch (opts.framework) {
     case Framework.Angular: {
-      if (opts.template === TemplateType.Demonstration) {
-        throw new Error(
-          "Angular demonstration dApp has not yet been implemented.",
-        );
-      }
-
-      const projectName: string = "web3js-angular-dapp-min";
+      const projectName: string = isDemo
+        ? "web3js-angular-dapp-demo"
+        : "web3js-angular-dapp-min";
       const projectLocation: string = join(
         __dirname,
         "..",
         "templates",
-        "min",
+        isDemo ? "demo" : "min",
         projectName,
       );
       return { projectName, projectLocation };
     }
     case Framework.React: {
-      const isDemo: boolean = opts.template === TemplateType.Demonstration;
       const projectName: string = isDemo
         ? "web3js-react-dapp-demo"
         : "web3js-react-dapp-min";

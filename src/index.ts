@@ -76,25 +76,20 @@ async function inquire(cliOpts: OptionValues): Promise<Options> {
   }
 
   if (!options.template) {
-    const choices = [
-      {
-        name: "Minimal",
-        value: TemplateType.Minimal,
-        description: "Starter project with minimal boilerplate",
-      },
-    ];
-
-    if (options.framework === Framework.React) {
-      choices.unshift({
-        name: "Demonstration",
-        value: TemplateType.Demonstration,
-        description: "Demonstration dApp",
-      });
-    }
-
     options.template = await select({
       message: "Select a template type",
-      choices,
+      choices: [
+        {
+          name: "Demonstration",
+          value: TemplateType.Demonstration,
+          description: "Demonstration dApp",
+        },
+        {
+          name: "Minimal",
+          value: TemplateType.Minimal,
+          description: "Starter project with minimal boilerplate",
+        },
+      ],
     });
   }
 

@@ -30,5 +30,5 @@ can be used to build dApps.
 
 This utility supports the following front-end frameworks:
 
-- [Angular](https://angular.dev/) (only available as a minimal template)
+- [Angular](https://angular.dev/)
 - [React](https://react.dev/)

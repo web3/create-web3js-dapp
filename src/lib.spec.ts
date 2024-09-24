@@ -43,17 +43,27 @@ test("getSelectedOption(angular, demonstration)", () => {
     framework: Framework.Angular,
     template: TemplateType.Demonstration,
   };
-  try {
-    const result: SelectedOption = getSelectedOption(opts);
-  } catch (e) {
-    assert.strictEqual(
-      e.toString(),
-      "Error: Angular demonstration dApp has not yet been implemented.",
-    );
-    return;
-  }
+  const result: SelectedOption = getSelectedOption(opts);
 
-  assert.strictEqual(true, false);
+  const expectedName: string = "web3js-angular-dapp-demo";
+  assert.strictEqual(
+    result.projectName,
+    expectedName,
+    "unexpected project name",
+  );
+
+  const expectedLocation: string = join(
+    __dirname,
+    "..",
+    "templates",
+    "demo",
+    expectedName,
+  );
+  assert.strictEqual(
+    result.projectLocation,
+    expectedLocation,
+    "unexpected project location",
+  );
 });
 
 test("getSelectedOption(react, minimal)", () => {
