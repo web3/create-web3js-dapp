@@ -13,7 +13,7 @@ for their selection.
 Usage: npx create-web3js-dapp [options]
 
 Options:
-  -f, --framework <name>  front-end framework (choices: "angular")
+  -f, --framework <name>  front-end framework (choices: "angular", "react")
   -t, --template <type>   template type (choices: "minimal")
   -h, --help              display help for command
 ```
@@ -31,3 +31,4 @@ can be used to build dApps.
 This utility supports the following front-end frameworks:
 
 - [Angular](https://angular.dev/)
+- [React](https://react.dev/)

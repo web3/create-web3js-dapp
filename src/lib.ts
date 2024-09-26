@@ -15,5 +15,16 @@ export function getSelectedOption(opts: Options): SelectedOption {
       );
       return { projectName, projectLocation };
     }
+    case "react": {
+      const projectName: string = "web3js-react-dapp-min";
+      const projectLocation: string = join(
+        __dirname,
+        "..",
+        "templates",
+        "min",
+        projectName,
+      );
+      return { projectName, projectLocation };
+    }
   }
 }

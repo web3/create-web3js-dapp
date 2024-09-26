@@ -1,4 +1,4 @@
-export type Framework = "angular";
+export type Framework = "angular" | "react";
 export type TemplateType = "minimal";
 
 export interface Options {
