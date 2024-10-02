@@ -24,7 +24,9 @@ function AccountDetail({ address }: { address: string }) {
   const web3Context: IWeb3Context = useContext(Web3Context);
 
   const [transferTo, setTransferTo] = useState<string>("");
-  const [transferAmount, setTransferAmount] = useState<number>(NaN);
+  const [transferAmount, setTransferAmount] = useState<bigint | undefined>(
+    undefined,
+  );
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [transactions, setTransactions] = useState<Map<string, string>>(
     new Map(),
@@ -62,7 +64,7 @@ function AccountDetail({ address }: { address: string }) {
       );
   });
 
-  const [balance, setBalance] = useState<bigint | undefined>(undefined);
+  const [balance, setBalance] = useState<number>(NaN);
   const subscriptionId: MutableRefObject<string | undefined> =
     useRef(undefined);
 
@@ -91,7 +93,9 @@ function AccountDetail({ address }: { address: string }) {
   });
 
   function updateBalance(): void {
-    web3Context.web3.eth.getBalance(address).then(setBalance);
+    web3Context.web3.eth.getBalance(address).then((balance: bigint) => {
+      setBalance(parseFloat(web3Context.web3.utils.fromWei(balance, "ether")));
+    });
   }
 
   function isValidAddress(address: string): boolean {
@@ -105,13 +109,13 @@ function AccountDetail({ address }: { address: string }) {
       setTransferTo(to);
     }
 
-    let amount: number = transferAmount;
+    let amount: bigint | undefined = transferAmount;
     if (e.target.name === "amount") {
-      amount = parseInt(e.target.value);
+      amount = BigInt(e.target.value);
       setTransferAmount(amount);
     }
 
-    setIsFormValid(isValidAddress(to) && !isNaN(amount));
+    setIsFormValid(isValidAddress(to) && amount !== undefined);
   }
 
   function transfer(e: FormEvent<HTMLFormElement>): void {
@@ -129,19 +133,20 @@ function AccountDetail({ address }: { address: string }) {
       return;
     }
 
-    const value: number = parseInt(amount as string);
-    if (isNaN(value)) {
+    const value: bigint | undefined =
+      (amount as string) !== "" ? BigInt(amount as string) : undefined;
+    if (value === undefined) {
       return;
     }
 
     setTransferTo("");
-    setTransferAmount(NaN);
+    setTransferAmount(undefined);
     setIsFormValid(false);
 
     const transactionId: string = uuid();
     setTransactions((prev: Map<string, string>) => {
       const next: Map<string, string> = new Map(prev);
-      next.set(transactionId, `Preparing to send ${amount} wei to ${to}`);
+      next.set(transactionId, `Preparing to send ${amount} ether to ${to}`);
       return next;
     });
 
@@ -149,12 +154,12 @@ function AccountDetail({ address }: { address: string }) {
       .sendTransaction({
         from: address,
         to: to as string,
-        value,
+        value: web3Context.web3.utils.toWei(value, "ether"),
       })
       .on("sent", () => {
         setTransactions((prev: Map<string, string>) => {
           const next = new Map<string, string>(prev);
-          next.set(transactionId, `Sending ${amount} wei to ${to}`);
+          next.set(transactionId, `Sending ${amount} ether to ${to}`);
           return next;
         });
       })
@@ -163,7 +168,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `Sending ${amount} wei to ${to} [Hash: ${data}]`,
+            `Sending ${amount} ether to ${to} [Hash: ${data}]`,
           );
 
           return next;
@@ -174,7 +179,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `${amount} wei sent to ${to} [Hash: ${data.transactionHash} Block #: ${data.blockNumber}]`,
+            `${amount} ether sent to ${to} [Hash: ${data.transactionHash} Block #: ${data.blockNumber}]`,
           );
 
           return next;
@@ -187,7 +192,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `${amount} wei sent to ${to} [Hash: ${receipt.transactionHash} Block #: ${receipt.blockNumber} Confirmations: ${numConfirmations}]`,
+            `${amount} ether sent to ${to} [Hash: ${receipt.transactionHash} Block #: ${receipt.blockNumber} Confirmations: ${numConfirmations}]`,
           );
 
           return next;
@@ -203,7 +208,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `Error sending ${amount} wei to ${to}: ${data}`,
+            `Error sending ${amount} ether to ${to}: ${data}`,
           );
 
           return next;
@@ -242,7 +247,7 @@ function AccountDetail({ address }: { address: string }) {
   return (
     <>
       <div>{address}</div>
-      <div>Balance in wei: {`${balance}`}</div>
+      <div>Balance in ether: {`${balance}`}</div>
       <form onSubmit={transfer}>
         <label>
           Transfer to:{" "}
@@ -257,9 +262,11 @@ function AccountDetail({ address }: { address: string }) {
         <span style={{ paddingRight: "5px" }}></span>
 
         <label>
-          Transfer amount in wei:{" "}
+          Transfer amount in ether:{" "}
           <input
-            value={!isNaN(transferAmount) ? transferAmount : ""}
+            value={
+              transferAmount === undefined ? "" : transferAmount.toString()
+            }
             onChange={transferFormChange}
             name="amount"
             type="number"

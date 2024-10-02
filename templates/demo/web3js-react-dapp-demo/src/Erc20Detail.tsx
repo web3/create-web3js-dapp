@@ -96,7 +96,9 @@ function Erc20Detail({ address }: { address: string }) {
   ]);
 
   const [transferTo, setTransferTo] = useState<string>("");
-  const [transferAmount, setTransferAmount] = useState<number>(NaN);
+  const [transferAmount, setTransferAmount] = useState<bigint | undefined>(
+    undefined,
+  );
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
   function isValidAddress(address: string): boolean {
@@ -110,13 +112,13 @@ function Erc20Detail({ address }: { address: string }) {
       setTransferTo(to);
     }
 
-    let amount: number = transferAmount;
+    let amount: bigint | undefined = transferAmount;
     if (e.target.name === "amount") {
-      amount = parseInt(e.target.value);
+      amount = BigInt(e.target.value);
       setTransferAmount(amount);
     }
 
-    setIsFormValid(isValidAddress(to) && !isNaN(amount));
+    setIsFormValid(isValidAddress(to) && amount !== undefined);
   }
 
   async function transfer(e: FormEvent<HTMLFormElement>): Promise<void> {
@@ -135,7 +137,7 @@ function Erc20Detail({ address }: { address: string }) {
     }
 
     setTransferTo("");
-    setTransferAmount(NaN);
+    setTransferAmount(undefined);
     setIsFormValid(false);
 
     const gas: bigint = await erc20.methods
@@ -187,7 +189,9 @@ function Erc20Detail({ address }: { address: string }) {
         <label>
           Transfer amount:{" "}
           <input
-            value={!isNaN(transferAmount) ? transferAmount : ""}
+            value={
+              transferAmount === undefined ? "" : transferAmount.toString()
+            }
             onChange={transferFormChange}
             name="amount"
             type="number"
