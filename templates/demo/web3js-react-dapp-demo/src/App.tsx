@@ -19,6 +19,7 @@ function App() {
   }, [web3Context.providers.length]);
 
   const [chainId, setChainId] = useState<bigint | undefined>(undefined);
+  const [networkId, setNetworkId] = useState<bigint | undefined>(undefined);
   useEffect(() => {
     if (web3Context.currentProvider === undefined) {
       return;
@@ -30,13 +31,15 @@ function App() {
       setChainId(newId);
     }
 
-    function updateProviderChainId(newId: ProviderChainId) {
+    function updateProviderIds(newId: ProviderChainId) {
       setChainId(BigInt(newId));
+      web3Context.web3.eth.net.getId().then(setNetworkId);
     }
 
     web3Context.web3.eth.getChainId().then(updateChainId);
-    provider.on("chainChanged", updateProviderChainId);
-    return () => provider.removeListener("chainChanged", updateProviderChainId);
+    web3Context.web3.eth.net.getId().then(setNetworkId);
+    provider.on("chainChanged", updateProviderIds);
+    return () => provider.removeListener("chainChanged", updateProviderIds);
   }, [web3Context.currentProvider, web3Context.web3.eth]);
 
   return (
@@ -116,6 +119,7 @@ function App() {
           ) : null}
           <h2>Network Details</h2>
           <div>Chain ID: {`${chainId}`}</div>
+          <div>Network ID: {`${networkId}`}</div>
           <AccountProvider>
             <Accounts></Accounts>
           </AccountProvider>
