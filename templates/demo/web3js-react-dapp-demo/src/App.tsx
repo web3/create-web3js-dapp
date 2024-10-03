@@ -8,8 +8,6 @@ import { type IWeb3Context, Web3Context } from "./web3/Web3Context";
 import Accounts from "./Accounts";
 import ProviderButton from "./ProviderButton";
 
-import "./App.css";
-
 function App() {
   const web3Context: IWeb3Context = useContext(Web3Context);
 
