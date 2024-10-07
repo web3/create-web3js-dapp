@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import "./App.css";
 import Web3Service from "./web3/web3-service";
 
 function App() {

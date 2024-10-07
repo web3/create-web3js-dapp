@@ -1,5 +1,12 @@
-export type Framework = "angular" | "react";
-export type TemplateType = "minimal";
+export enum Framework {
+  Angular = "angular",
+  React = "react",
+}
+
+export enum TemplateType {
+  Demonstration = "demonstration",
+  Minimal = "minimal",
+}
 
 export interface Options {
   framework: Framework;

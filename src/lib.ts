@@ -1,10 +1,21 @@
 import { join } from "path";
 
-import type { Options, SelectedOption } from "./types";
+import {
+  Framework,
+  TemplateType,
+  type Options,
+  type SelectedOption,
+} from "./types";
 
 export function getSelectedOption(opts: Options): SelectedOption {
   switch (opts.framework) {
-    case "angular": {
+    case Framework.Angular: {
+      if (opts.template === TemplateType.Demonstration) {
+        throw new Error(
+          "Angular demonstration dApp has not yet been implemented.",
+        );
+      }
+
       const projectName: string = "web3js-angular-dapp-min";
       const projectLocation: string = join(
         __dirname,
@@ -15,13 +26,16 @@ export function getSelectedOption(opts: Options): SelectedOption {
       );
       return { projectName, projectLocation };
     }
-    case "react": {
-      const projectName: string = "web3js-react-dapp-min";
+    case Framework.React: {
+      const isDemo: boolean = opts.template === TemplateType.Demonstration;
+      const projectName: string = isDemo
+        ? "web3js-react-dapp-demo"
+        : "web3js-react-dapp-min";
       const projectLocation: string = join(
         __dirname,
         "..",
         "templates",
-        "min",
+        isDemo ? "demo" : "min",
         projectName,
       );
       return { projectName, projectLocation };

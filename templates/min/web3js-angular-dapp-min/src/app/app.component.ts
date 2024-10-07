@@ -6,8 +6,7 @@ import { Web3Service } from './web3/web3.service';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   hasProvider: boolean;
