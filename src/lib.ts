@@ -40,5 +40,22 @@ export function getSelectedOption(opts: Options): SelectedOption {
       );
       return { projectName, projectLocation };
     }
+    case Framework.Vue: {
+      if (opts.template === TemplateType.Demonstration) {
+        throw new Error(
+          "Vue demonstration dApp has not yet been implemented.",
+        );
+      }
+
+      const projectName: string = "web3js-vue-dapp-min";
+      const projectLocation: string = join(
+        __dirname,
+        "..",
+        "templates",
+        "min",
+        projectName,
+      );
+      return { projectName, projectLocation };
+    }
   }
 }

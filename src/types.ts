@@ -1,6 +1,7 @@
 export enum Framework {
   Angular = "angular",
   React = "react",
+  Vue = "vue",
 }
 
 export enum TemplateType {

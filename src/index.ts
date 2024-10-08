@@ -16,6 +16,7 @@ program
     new Option("-f, --framework <name>", "front-end framework").choices([
       "angular",
       "react",
+      "vue",
     ]),
   )
   .addOption(
@@ -70,6 +71,10 @@ async function inquire(cliOpts: OptionValues): Promise<Options> {
         {
           name: "React",
           value: Framework.React,
+        },
+        {
+          name: "Vue",
+          value: Framework.Vue,
         },
       ],
     });
