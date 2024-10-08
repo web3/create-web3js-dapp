@@ -1,0 +1,22 @@
+name: web3js-vue-dapp-min Build & Test
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+        types: [ opened, reopened, synchronize ]
+jobs:
+    build:
+        name: Build & Test
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: templates/min/web3js-vue-dapp-min
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                node-version: 20
+            - run: npm i
+            - run: npm run build
+            - run: npm test:unit
