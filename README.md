@@ -13,7 +13,7 @@ for their selection.
 Usage: npx create-web3js-dapp [options]
 
 Options:
-  -f, --framework <name>  front-end framework (choices: "angular", "react")
+  -f, --framework <name>  front-end framework (choices: "angular", "react", "vue")
   -t, --template <type>   template type (choices: "demonstration", "minimal")
   -h, --help              display help for command
 ```
@@ -32,3 +32,4 @@ This utility supports the following front-end frameworks:
 
 - [Angular](https://angular.dev/) (only available as a minimal template)
 - [React](https://react.dev/)
+- [Vue](https://vuejs.org/) (only available as a minimal template)
