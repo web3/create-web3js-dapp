@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "vue": "^3.4.29",
-    "web3": "^4.13.0"
+    "web3": "^4.14.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",

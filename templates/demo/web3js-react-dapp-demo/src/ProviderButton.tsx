@@ -1,15 +1,11 @@
 import { useContext } from "react";
 
-import { providers } from "web3";
+import { EIP6963ProviderDetail } from "web3";
 
 import "./ProviderButton.css";
 import { IWeb3Context, Web3Context } from "./web3/Web3Context";
 
-function ProviderButton({
-  provider,
-}: {
-  provider: providers.EIP6963ProviderDetail;
-}) {
+function ProviderButton({ provider }: { provider: EIP6963ProviderDetail }) {
   const web3Context: IWeb3Context = useContext(Web3Context);
 
   return (

@@ -1,7 +1,13 @@
 import { useSyncExternalStore } from "react";
-import { providers, Web3 } from "web3";
+import {
+  EIP6963ProviderDetail,
+  EIP6963ProvidersMapUpdateEvent,
+  EIP6963ProviderResponse,
+  Web3,
+  web3ProvidersMapUpdated,
+} from "web3";
 
-let providerList: providers.EIP6963ProviderDetail[] = [];
+let providerList: EIP6963ProviderDetail[] = [];
 
 /**
  * External store for subscribing to EIP-6963 providers
@@ -10,7 +16,7 @@ let providerList: providers.EIP6963ProviderDetail[] = [];
 const providerStore = {
   getSnapshot: () => providerList,
   subscribe: (callback: () => void) => {
-    function setProviders(response: providers.EIP6963ProviderResponse) {
+    function setProviders(response: EIP6963ProviderResponse) {
       providerList = [];
       for (const [, provider] of response) {
         providerList.push(provider);
@@ -21,9 +27,7 @@ const providerStore = {
 
     Web3.requestEIP6963Providers().then(setProviders);
 
-    function updateProviders(
-      providerEvent: providers.EIP6963ProvidersMapUpdateEvent,
-    ) {
+    function updateProviders(providerEvent: EIP6963ProvidersMapUpdateEvent) {
       setProviders(providerEvent.detail);
     }
 
@@ -31,7 +35,7 @@ const providerStore = {
 
     return () =>
       window.removeEventListener(
-        providers.web3ProvidersMapUpdated as any,
+        web3ProvidersMapUpdated as any,
         updateProviders,
       );
   },
