@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import type { Address, Contract, providers } from "web3";
+import type { Address, Contract, EIP6963ProviderDetail } from "web3";
 import type { DeployerMethodClass } from "web3-eth-contract";
 
 import { AccountContext, type IAccountContext } from "./web3/AccountContext";
@@ -23,7 +23,8 @@ function Erc20() {
 
   const [deployName, setDeployName] = useState<string>("");
   const [deploySymbol, setDeploySymbol] = useState<string>("");
-  const [deployAmount, setDeployAmount] = useState<bigint>(10000000000000000000000n);
+  const [deployAmount, setDeployAmount] =
+    useState<bigint>(10000000000000000000000n);
   const [deployDecimals, setDeployDecimals] = useState<number>(18);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
@@ -31,7 +32,7 @@ function Erc20() {
 
   // update deployed contracts
   useEffect(() => {
-    const currentProvider: providers.EIP6963ProviderDetail | undefined =
+    const currentProvider: EIP6963ProviderDetail | undefined =
       web3Context.currentProvider;
 
     if (currentProvider === undefined) {
@@ -76,9 +77,7 @@ function Erc20() {
       setDeployDecimals(decimals);
     }
 
-    setIsFormValid(
-      name !== "" && symbol !== "" && !isNaN(decimals),
-    );
+    setIsFormValid(name !== "" && symbol !== "" && !isNaN(decimals));
   }
 
   async function submitDeploy(e: FormEvent<HTMLFormElement>): Promise<void> {
