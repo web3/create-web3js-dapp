@@ -20,13 +20,13 @@ Options:
 
 ## Template Types
 
-Two types of templates are provided. [Minimal templates](./templates/min) are
+Two types of templates are provided. [Minimal templates](templates/min) are
 designed for users that want to build their own front-end project (dApp) without
 the need to remove unnecessary boilerplate code.
-[Demonstration templates](./templates/demo) are designed to showcase how Web3.js
+[Demonstration templates](templates/demo) are designed to showcase how Web3.js
 can be used to build dApps.
 
-## Front-End Framework
+## Front-End Frameworks
 
 This utility supports the following front-end frameworks:
 

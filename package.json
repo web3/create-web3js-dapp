@@ -22,6 +22,7 @@
     "ChainSafe <info@chainsafe.io>"
   ],
   "license": "MIT",
+  "repository": "github:web3/create-web3js-dapp",
   "devDependencies": {
     "ts-node": "^10.9.2",
     "tsup": "^8.3.0",
