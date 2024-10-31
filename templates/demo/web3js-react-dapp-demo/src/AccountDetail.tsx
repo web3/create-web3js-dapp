@@ -15,7 +15,7 @@ import type { SendTransactionEvents, NewHeadsSubscription } from "web3-eth";
 import { type IWeb3Context, Web3Context } from "./web3/Web3Context";
 import type {
   DataFormat,
-  providers,
+  EIP6963ProviderDetail,
   TransactionReceipt,
   Web3PromiEvent,
 } from "web3";
@@ -40,7 +40,7 @@ function AccountDetail({ address }: { address: string }) {
 
   // update transactions
   useEffect(() => {
-    const currentProvider: providers.EIP6963ProviderDetail | undefined =
+    const currentProvider: EIP6963ProviderDetail | undefined =
       web3Context.currentProvider;
 
     if (currentProvider === undefined) {

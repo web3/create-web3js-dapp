@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import type { ProviderChainId, providers } from "web3";
+import type { EIP6963ProviderDetail, ProviderChainId } from "web3";
 
 import { AccountProvider } from "./web3/AccountContext";
 import { type IWeb3Context, Web3Context } from "./web3/Web3Context";
@@ -42,7 +42,7 @@ function App() {
 
   return (
     <main>
-      <h1>Web3.js + React Minimal dApp Template</h1>
+      <h1>Web3.js + React Demonstration dApp</h1>
       <div>
         This is a sample project that demonstrates using{" "}
         <a href="https://web3js.org/">Web3.js</a> with the{" "}
@@ -83,36 +83,31 @@ function App() {
       ) : web3Context.currentProvider === undefined ? (
         <>
           <h2>Select a Provider</h2>
-          {web3Context.providers.map(
-            (provider: providers.EIP6963ProviderDetail) => {
-              return (
-                <div key={provider.info.uuid}>
-                  <ProviderButton provider={provider}></ProviderButton>
-                </div>
-              );
-            }
-          )}
+          {web3Context.providers.map((provider: EIP6963ProviderDetail) => {
+            return (
+              <div key={provider.info.uuid}>
+                <ProviderButton provider={provider}></ProviderButton>
+              </div>
+            );
+          })}
         </>
       ) : (
         <>
           {web3Context.providers.length > 1 ? (
             <>
               <h2>Switch Provider</h2>
-              {web3Context.providers.map(
-                (provider: providers.EIP6963ProviderDetail) => {
-                  if (
-                    provider.info.uuid ===
-                    web3Context.currentProvider?.info.uuid
-                  ) {
-                    return null;
-                  }
-                  return (
-                    <div key={provider.info.uuid}>
-                      <ProviderButton provider={provider}></ProviderButton>
-                    </div>
-                  );
+              {web3Context.providers.map((provider: EIP6963ProviderDetail) => {
+                if (
+                  provider.info.uuid === web3Context.currentProvider?.info.uuid
+                ) {
+                  return null;
                 }
-              )}
+                return (
+                  <div key={provider.info.uuid}>
+                    <ProviderButton provider={provider}></ProviderButton>
+                  </div>
+                );
+              })}
             </>
           ) : null}
           <h2>Network Details</h2>
