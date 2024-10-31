@@ -25,11 +25,11 @@ function AccountDetail({ address }: { address: string }) {
 
   const [transferTo, setTransferTo] = useState<string>("");
   const [transferAmount, setTransferAmount] = useState<bigint | undefined>(
-    undefined,
+    undefined
   );
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [transactions, setTransactions] = useState<Map<string, string>>(
-    new Map(),
+    new Map()
   );
 
   type TransferEvent = Web3PromiEvent<
@@ -60,7 +60,7 @@ function AccountDetail({ address }: { address: string }) {
     return () =>
       currentProvider.provider.removeListener(
         "chainChanged",
-        clearTransactions,
+        clearTransactions
       );
   });
 
@@ -87,7 +87,7 @@ function AccountDetail({ address }: { address: string }) {
 
     return () => {
       web3Context.web3.eth.subscriptionManager.unsubscribe(
-        ({ id }) => subscriptionId.current === id,
+        ({ id }) => subscriptionId.current === id
       );
     };
   });
@@ -168,7 +168,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `Sending ${amount} ether to ${to} [Hash: ${data}]`,
+            `Sending ${amount} ether to ${to} [Hash: ${data}]`
           );
 
           return next;
@@ -179,7 +179,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `${amount} ether sent to ${to} [Hash: ${data.transactionHash} Block #: ${data.blockNumber}]`,
+            `${amount} ether sent to ${to} [Hash: ${data.transactionHash} Block #: ${data.blockNumber}]`
           );
 
           return next;
@@ -192,7 +192,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `${amount} ether sent to ${to} [Hash: ${receipt.transactionHash} Block #: ${receipt.blockNumber} Confirmations: ${numConfirmations}]`,
+            `${amount} ether sent to ${to} [Hash: ${receipt.transactionHash} Block #: ${receipt.blockNumber} Confirmations: ${numConfirmations}]`
           );
 
           return next;
@@ -208,7 +208,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `Error sending ${amount} ether to ${to}: ${data}`,
+            `Error sending ${amount} ether to ${to}: ${data}`
           );
 
           return next;
@@ -235,7 +235,7 @@ function AccountDetail({ address }: { address: string }) {
           const next = new Map<string, string>(prev);
           next.set(
             transactionId,
-            `Error sending ${amount} wei to ${to}: ${error}`,
+            `Error sending ${amount} wei to ${to}: ${error}`
           );
 
           return next;
@@ -246,8 +246,11 @@ function AccountDetail({ address }: { address: string }) {
 
   return (
     <>
-      <div>{address}</div>
-      <div>Balance in ether: {`${balance}`}</div>
+      <div data-cy="label-address">{address}</div>
+      <div>
+        <div>Balance in ether: </div>
+        <div data-cy="label-balance">{`${balance}`}</div>
+      </div>
       <form onSubmit={transfer}>
         <label>
           Transfer to:{" "}

@@ -13,7 +13,7 @@ function ProviderButton({
   const web3Context: IWeb3Context = useContext(Web3Context);
 
   return (
-    <button onClick={() => web3Context.setCurrentProvider(provider)}>
+    <button onClick={() => web3Context.setCurrentProvider(provider)} data-cy="button-connect-provider">
       <img src={provider.info.icon} alt={provider.info.name} width="35" />
       <span> {provider.info.name}</span>
     </button>

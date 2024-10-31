@@ -23,12 +23,14 @@
     "web-vitals": "^2.1.4",
     "web3": "^4.13.0",
     "web3-eth": "^4.9.0",
-    "web3-eth-contract": "^4.7.0"
+    "web3-eth-contract": "^4.7.0",
+    "cypress": "^13.15.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "cypress open",
+    "test:ci": "cypress run --browser chrome --headless",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

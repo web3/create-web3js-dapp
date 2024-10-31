@@ -90,7 +90,7 @@ function App() {
                   <ProviderButton provider={provider}></ProviderButton>
                 </div>
               );
-            },
+            }
           )}
         </>
       ) : (
@@ -111,13 +111,19 @@ function App() {
                       <ProviderButton provider={provider}></ProviderButton>
                     </div>
                   );
-                },
+                }
               )}
             </>
           ) : null}
           <h2>Network Details</h2>
-          <div>Chain ID: {`${chainId}`}</div>
-          <div>Network ID: {`${networkId}`}</div>
+          <div>
+            <div>Chain ID: </div>
+            <div data-cy="label-chain-id">{`${chainId}`}</div>
+          </div>
+          <div>
+            <div>Network ID: </div>
+            <div data-cy="label-network-id">{`${networkId}`}</div>
+          </div>
           <AccountProvider>
             <Accounts></Accounts>
           </AccountProvider>
