@@ -141,11 +141,11 @@ function Erc20Detail({ address }: { address: string }) {
     setIsFormValid(false);
 
     const gas: bigint = await erc20.methods
-      .transfer(to, amount)
+      .transfer(to as string, amount as string)
       .estimateGas({ from: account });
 
     const gasPrice: bigint = await web3Context.web3.eth.getGasPrice();
-    erc20.methods.transfer(to, amount).send({
+    erc20.methods.transfer(to as string, amount as string).send({
       from: account,
       gas: gas.toString(),
       gasPrice: gasPrice.toString(),
